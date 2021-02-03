@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    container_name: web
+    restart: always
+    build: ./app
+    command: gunicorn -w 3 -b 0.0.0.0:8000 --log-file - --log-level debug run:app
+
+  nginx:
+    container_name: nginx
+    restart: always
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./app/flaskapp/static:/static
+    depends_on:
+      - web

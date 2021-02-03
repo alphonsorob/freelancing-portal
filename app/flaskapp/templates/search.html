@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+  {% if rec_profiles %}
+
+    <h3>These are your search results</h3>
+    {% for profile in rec_profiles %}
+    <article class="media content-section">
+      <img class="rounded-circle article-image" src="{{ url_for('static', filename='profile_pics/' + profile.user.image_file) }}"> 
+      <div class="media-body">
+        <div class="article-metadata ml-4">
+          <a class="mr-2">Profile Id: {{ profile.id }}</a>
+        </div>
+        <div class='ml-4'>
+        <h3><a class="article-title">{{ profile.user.firstname }} {{ profile.user.lastname }}</a></h3>
+        <h4><a class="article-title">{{ profile.location }}</a></h4>
+        <span><b>Skills:  </b></span><p class="article-content">{{ profile.skills[0:100] }}<span> ...</span></p>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  {% endif %}
+
+  {% if rec_jobs %}
+
+    <h3>These are your search results</h3>
+
+    {% for job in rec_jobs %}
+      <article class="media content-section">
+        <img class="rounded-circle article-image" src="{{ url_for('static', filename='profile_pics/' + job.user.image_file) }}"> 
+        <div class="media-body">
+          <div class="article-metadata ml-4">
+            <a class="mr-2" href="#">{{ job.user.username }}</a>
+            <small class="text-muted">{{ job.date.strftime('%d-%m-%Y') }}</small>
+          </div>
+          <div class='ml-4'>
+          <h2 class="article-title"><span>{{ job.title }}</h2>
+          <h4><a class="article-title"><span><b>Skills:    </b></span>{{ job.skills[0:100] }}<span> ...</span></a></h4>
+          <p class="article-content"><span><b>Description:    </b></span>{{ job.description[0:1000] }}<span> ...</span></p>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  {% endif %}
+{% endblock content %}

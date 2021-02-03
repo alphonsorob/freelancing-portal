@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="preloader">
+        <!--<img src="{{ url_for('static', filename='spinner.svg') }}" alt="spinner">-->
+    </div>
+    <div class="container hero-bg">
+        <div class='hero-text'>
+            {% if current_user.is_authenticated %}
+
+            {% else %}
+                <h3 style="text-align: center; color: white">What are you looking for?</h3>
+                </br>
+                <center>
+                <form class="search" method="post" action="{{ url_for('main.search') }}" 
+                    style="margin:auto;max-width:600px">
+                    <input type="radio" id="job" name="searchtype" value="job" checked>
+                    <label style='color:white' class='labeltext' for="job">Job</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" id="freelancer" name="searchtype" value="freelancer">
+                    <label style='color:white' class='labeltext' for="freelancer">Freelancer</label></br>
+                    <input type="text" placeholder="Search by skills, job category etc" name="search">
+                    <button type="submit"><i class="fa fa-search"></i>
+                    </button>
+                </form>
+                </center>
+                <p></p>
+                <!--
+                <center>
+                {% for item in data %}
+                    <tr>
+                        <td> {{item[0]}} by {{item[1]}}</td>
+                        </br>
+                    </tr>
+                {% endfor %}
+                </center>
+                -->
+                </br></br>
+                <center style='color: white'>
+                    <h4 class="home-signup-btn"><a style="color:#59a1c0" href="{{ url_for('users.register') }}">Sign Up</a></h4><span style="font-size: 20px;"> to get personalized recommendations!</span>
+                </center>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
+  

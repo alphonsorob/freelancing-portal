@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+    <img class="rounded-circle article-image" src="{{ url_for('static', filename='profile_pics/' + job.user.image_file) }}"> 
+    <div class="media-body">
+      <div class="article-metadata ml-4">
+        <a class="mr-2">Job Id: {{ job.id }}</a>
+        <!--<small class="text-muted">{{ job.date.strftime('%d-%m-%Y') }}</small>-->
+        {% if job.user == current_user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('jobs.update_job', job_id=job.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+          </div>
+        {% endif %}
+      </div>
+      <div class='ml-4'>
+      <h2 class="article-title">{{ job.title }}</h2>
+      <h4><a class="article-title"><span><b>Skills:  </b></span>{{ job.skills[0:100] }}<span> ...</span></a></h4>
+      <p class="article-content"><span><b>Description:  </b></span>{{ job.description[0:1000] }}<span> ...</span></p>
+      </div>
+    </div>
+  </article>
+  <div>
+    <h5>Below are the best suited freelancers for your job posting: </h5>
+  </div>
+  
+  {% for profile in rec_profiles.items %}
+    <article class="media content-section">
+      <img class="rounded-circle article-image" src="{{ url_for('static', filename='profile_pics/' + profile.user.image_file) }}"> 
+      <div class="media-body">
+        <div class="article-metadata ml-4">
+          <a class="mr-2">Profile Id: {{ profile.id }}</a>
+        </div>
+        <div class='ml-4'>
+        <h3><a class="article-title">{{ profile.user.firstname }} {{ profile.user.lastname }}</a></h3>
+        <h4><a class="article-title">{{ profile.location }}</a></h4>
+        <span><b>Skills:  </b></span><p class="article-content">{{ profile.skills[0:100] }}<span> ...</span></p>
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+  
+  {% for page_num in rec_profiles.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if rec_profiles.page == page_num %}
+        <a class="btn btn-info mb-4" href="{{ url_for('jobs.job', job_id=job.id, page=page_num)}}">{{ page_num }}</a>
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('jobs.job', job_id=job.id, page=page_num)}}">{{ page_num }}</a>
+      {% endif%}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
+  
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete Job Post?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form action="{{ url_for('jobs.delete_job', job_id=job.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

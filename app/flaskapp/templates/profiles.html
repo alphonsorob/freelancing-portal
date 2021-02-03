@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h2>Your Freelancer Profiles:</h2>
+  {% for profile in profiles %}
+    <article class="media content-section">
+      <img class="rounded-circle article-image" src="{{ url_for('static', filename='profile_pics/' + profile.user.image_file) }}"> 
+      <div class="media-body">
+        <div class="article-metadata ml-4">
+          <a class="mr-2">Profile Id: {{ profile.id }}</a>
+        </div>
+        <div class='ml-4'>
+        <h3><a class="article-title" href="{{ url_for('profiles.profile', profile_id=profile.id) }}">{{ profile.user.firstname }} {{ profile.user.lastname }}</a></h3>
+        <p class="article-content">{{ profile.skills[0:100] }}<span> ...</span></p>
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+
+{% endblock content %}

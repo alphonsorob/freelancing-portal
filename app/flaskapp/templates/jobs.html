@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+  <h2>Your Job Posts:</h2>
+  {% for job in jobs %}
+    <a href="{{ url_for('jobs.job', job_id=job.id) }}">
+      <div class="media content-section">
+        <img class="rounded-circle article-image" src="{{ url_for('static', filename='profile_pics/' + job.user.image_file) }}"> 
+        <div class="media-body">
+          
+          <div class="article-metadata ml-4">
+            <a class="mr-2"">Job Id: {{ job.id }}</a>
+            <small class="text-muted">Created On: {{ job.date.strftime('%d-%m-%Y') }}</small>
+          </div>
+        
+          <div class='ml-4'>
+          <h2><a class="article-title" href="{{ url_for('jobs.job', job_id=job.id) }}"><span><b>Title:  </b></span>{{ job.title }}</a></h2>
+          <h3 style="display:inline"></h3><h4  style="display:inline"><a class="article-title"><span><b>Skills:  </b></span>{{ job.skills[0:100] }}<span> ...</span></a></h4>
+          <p style="display:block; margin-top: 5px"class="article-content">{{ job.description[0:1000] }}<span> ...</span></p>
+          </div>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+
+{% endblock content %}

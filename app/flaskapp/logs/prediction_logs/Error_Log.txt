@@ -1,0 +1,4 @@
+2020-12-18/13:44:34		division by zero
+2020-12-18/16:32:42		division by zero
+2020-12-18/17:13:56		division by zero
+2020-12-18/17:14:06		division by zero

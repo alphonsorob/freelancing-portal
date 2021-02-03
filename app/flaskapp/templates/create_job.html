@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class='content-section'>
+  <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">{{ legend }}</legend>
+      
+      <div class="form-group">
+        {{ form.title.label(class="form-control-label") }}</br>
+        {% if form.title.errors %}
+          {{ form.title(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.title.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.title(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.skills.label(class="form-control-label") }}</br>
+        {% if form.skills.errors %}
+          {{ form.skills(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.skills.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.skills(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.description.label(class="form-control-label") }}</br>
+        {% if form.description.errors %}
+          {{ form.description(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid_feedback">
+            {% for error in form.description.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.description(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+    </fieldset>
+
+    <div class="form-group">
+      {{ form.min_budget.label(class="form-control-label") }}</br>
+      {% if form.min_budget.errors %}
+        {{ form.min_budget(class="form-control form-control-lg is-invalid") }}
+        <div class="invalid_feedback">
+          {% for error in form.description.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.min_budget(class="form-control form-control-lg") }}
+      {% endif %}
+    </div>
+    </fieldset>
+    <div class="form-group">
+      {{ form.category.label(class="form-control-label") }}</br>
+      {% if form.category.errors %}
+        {{ form.category(class="form-control form-control-lg is-invalid") }}
+        <div class="invalid_feedback">
+          {% for error in form.category.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+      {% else %}
+        {% for subfield in form.category %}
+          <tr>
+              <td>{{ subfield }}</td>
+              <td>{{ subfield.label }}</td>
+          </tr></br>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </fieldset>
+    <div class="form-group">
+      {% if purpose == 'create' %}
+        {{ form.create(class="btn btn-outline-info")}}
+      {% elif purpose == 'update' %}
+        {{ form.update(class="btn btn-outline-info")}}
+      {% endif %}
+    </div>
+  </form>
+</div>
+{% endblock content %}
